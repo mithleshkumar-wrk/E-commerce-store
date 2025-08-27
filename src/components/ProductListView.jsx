@@ -24,13 +24,13 @@ const ProductListView = ({ product }) => {
 
 
     return (
-        <div className='space-y-4 rounded-md mt-2'>
-            <div className='bg-gray-100 flex flex-col  gap-7 items-center rounded-md p-2'>
-                <div className=' w-full'>
+        <div className='space-y-4 rounded-md mt-2 '>
+            <div className='bg-green-600 flex flex-col md:flex-row  gap-7 items-center rounded-md p-2'>
+                <div className='  bg-red-400'>
                     <img src={product.image} onClick={() => {
                         navigate(`/products/${product.id}`),
                             window.scrollTo(0, 0)
-                    }} alt={product.title} className='md:h-44  w-full aspect-square md:w-44 rounded-md cursor-pointer' />
+                    }} alt={product.title} className='   w-[500px] h-auto  rounded-md cursor-pointer ' />
                 </div>
 
 
