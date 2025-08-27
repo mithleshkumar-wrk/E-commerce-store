@@ -33,7 +33,7 @@ const ProductListView = ({ product }) => {
                         window.scrollTo(0, 0);
                     }}
                     alt={product.title}
-                    className="w-full max-w-[230px] aspect-square object-cover rounded-md cursor-pointer"
+                    className="w-full md:max-w-[230px] aspect-square object-cover rounded-md cursor-pointer"
                 />
 
 
