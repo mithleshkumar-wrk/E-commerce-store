@@ -25,12 +25,17 @@ const ProductListView = ({ product }) => {
 
     return (
         <div className='space-y-4 rounded-md mt-2 '>
-            <div className='bg-green-600 flex flex-col md:flex-row  gap-7 items-center rounded-md p-2'>
-                <div className='  bg-red-400'>
-                    <img src={product.image} onClick={() => {
-                        navigate(`/products/${product.id}`),
-                            window.scrollTo(0, 0)
-                    }} alt={product.title} className='   w-[500px] h-auto  rounded-md cursor-pointer ' />
+            <div className='bg-gray-100 flex flex-col md:flex-row  gap-7 items-center rounded-md p-2'>
+                <div className="flex justify-center items-center">
+                    <img
+                        src={product.image}
+                        onClick={() => {
+                            window.open(`/products/${product.id}`, "_blank");
+                            window.scrollTo(0, 0);
+                        }}
+                        alt={product.title}
+                        className="w-full max-w-[230px] aspect-square object-cover rounded-md cursor-pointer"
+                    />
                 </div>
 
 
