@@ -20,8 +20,9 @@ const SingleProduct = () => {
     // getting single product from api 
     const getSingleProduct = async () => {
         try {
-            const res = await axios.get(`https://fakestoreapi.in/api/products/${params.id}`)
-            setSingleProduct(res.data.product);
+            const res = await axios.get(`https://fakestoreapi.com/products/${params.id}`)
+            console.log(res.data)
+            setSingleProduct(res.data);
         } catch (error) {
             console.log(error);
         }

@@ -108,7 +108,7 @@ const Products = () => {
 
   return (
     <div>
-      <div className='max-w-6xl mx-auto px-4 mb-10 '>
+      <div className='max-w-6xl  mx-auto px-4 mb-10 '>
         {
           data?.length > 0 ? (
             <>
@@ -142,7 +142,7 @@ const Products = () => {
                       <button onClick={()=> {
                         setFilterOpen(false),
                         window.scrollTo(0,0)
-                      }} className='flex items-center gap-2 mt-4 rounded-md border py-2 px-4 bg-red-200 text-gray-800 font-bold'>Close Filter <span className='text-red-500 '><IoIosCloseCircle /></span></button>
+                      }} className='text-lg font-semibold flex  items-center justify-center gap-2 rounded-md px-6 py-1 mt-2  border-2 border-gray-300'> Filter <span className=''><IoIosCloseCircle /></span></button>
 
                     </div>
 
@@ -151,9 +151,9 @@ const Products = () => {
 
               </div>
 
-              <div className='flex gap-8'>
+              <div className='flex  gap-8'>
 
-                <div className='hidden md:block'>
+                <div className='hidden  md:block '>
                   <FilterSection
                     props={{
                       search,
@@ -174,7 +174,7 @@ const Products = () => {
 
                 {
                   filterData?.length > 0 ? (
-                    <div className='flex flex-col '>
+                    <div className='flex flex-col  md:w-[75%]'>
                       <div className='grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-8 justify-center mt-4  md:mt-10 '>
                         {
                           filterData?.slice(page * 12 - 12, page * 12).map((product, index) => {

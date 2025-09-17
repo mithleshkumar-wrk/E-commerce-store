@@ -14,7 +14,7 @@ const Category = () => {
                     categoryOnlyData.filter(item=>item !== "All")?.map((item, index) => {
                         return <div key={index}>
                             <Button onClick={()=> {
-                                navigate(`/category/${item}`),
+                                navigate(`/products`),
                                 window.scrollTo(0,0)
                             }} className="rounded-full px-6" text={item} />
                         </div>

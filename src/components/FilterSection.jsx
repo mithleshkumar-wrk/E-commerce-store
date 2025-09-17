@@ -7,13 +7,13 @@ const FilterSection = ({ handleCategoryChange, handleBrandChange,handleResetFilt
     const { categoryOnlyData, brandOnlyData } = useGetData();
 
     return (
-        <div className='mt-2 md:mt-10 bg-gray-100 rounded-md p-4 h-max '>
+        <div className='mt-2  md:mt-10 bg-gray-100 rounded-md p-4 h-max '>
 
 
             <input type="text"
                 value={props.value}
                 onChange={(e) => props.setSearch(e.target.value)} placeholder='Search...'
-                className='bg-white border rounded-md w-full px-2 py-2 md:py-1 outline-none border-gray-300'
+                className='bg-white border rounded-md w-full px-2 py-2 md:py-1 outline-none border-gray-300 '
             />
 
             {/* sorting product  */}
@@ -52,7 +52,7 @@ const FilterSection = ({ handleCategoryChange, handleBrandChange,handleResetFilt
                 }
             </div>
 
-            {/* brand only data  */}
+            {/* brand only data 
             <h1 className='mt-5 font-semibold text-lg'>Brand</h1>
 
             <select
@@ -64,10 +64,10 @@ const FilterSection = ({ handleCategoryChange, handleBrandChange,handleResetFilt
             >
                 {
                     brandOnlyData?.map((item, index) => {
-                        return <option value={item} key={index} className='text-sm'>{item.toUpperCase()}</option>
+                        return <option value={item} key={index} className='text-sm uppercase'>{item}</option>
                     })
                 }
-            </select>
+            </select> */}
 
             {/* price range  */}
             <h1 className='mt-5 font-semibold text-lg'>Price Range</h1>

@@ -7,6 +7,7 @@ import { useCart } from '../context/CartContext'
 const ProductCard = ({ product }) => {
     
    const {addToCart} = useCart();
+
   
     return (
         <div className='hover:shadow-2xl aspect-square p-2 shadow md:p-3 hover:scale-105 transition-all rounded-2xl ' >
