@@ -6,10 +6,13 @@ import Slider from 'react-slick';
 import Button from './common/Button';
 import Loader from './common/Loader';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
+
 
 const Carousel = () => {
     const { data, fetchAllProducts } = useGetData();
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const randomNumFirst = Math.floor(Math.random() * 140)
     const randomNumSecond = randomNumFirst + 6
@@ -74,7 +77,7 @@ const Carousel = () => {
 
 
                                 <div className='mb-16 md:mb-0'>
-                                    <img onClick={() => window.open(`/products/${item.id}`, "_blank")} src={item.image} alt={item.title} className='md:rounded-full rounded-2xl md:h-[350px] md:w-[300px] h-[350px] w-[350px] hover:scale-105 md:p-10 p-2 transition-all shadow-2xl bg-white shadow-[#f36d6d]' />
+                                    <img onClick={() => navigate(`/products/${item.id}`)} src={item.image} alt={item.title} className='md:rounded-full rounded-2xl md:h-[350px] md:w-[300px] h-[350px] w-[350px] hover:scale-105 md:p-10 p-2 transition-all shadow-2xl bg-white shadow-[#f36d6d]' />
                                 </div>
 
                                 <div className='space-y-6  mb-12 md:mb-0'>
