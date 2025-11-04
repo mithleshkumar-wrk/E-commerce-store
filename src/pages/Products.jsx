@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useGetData } from '../context/DataContext'
 import FilterSection from '../components/FilterSection';
 import Loader from '../components/common/Loader';
-import ProductCard from '../components/ProductCard';
+import ProductCard, { HOF } from '../components/ProductCard';
 import Pagination from '../components/Pagination';
 import Lottie from 'lottie-react';
 import ani from '../assets/ani.json'
@@ -20,6 +20,7 @@ const Products = () => {
   const [page, setPage] = useState(1);
   const [filterOpen, setFilterOpen] = useState(false);
 
+  const HOFComponent = HOF(ProductCard);
 
   useEffect(() => {
     fetchAllProducts();
@@ -178,7 +179,7 @@ const Products = () => {
                       <div className='grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-8 justify-center mt-4  md:mt-10 '>
                         {
                           filterData?.slice(page * 12 - 12, page * 12).map((product, index) => {
-                            return <ProductCard key={index} product={product} />
+                            return ( product.rating.rate > 4 ? <HOFComponent key={index} product={product}/> : <ProductCard key={index} product={product} />)
                           })
                         }
                       </div>

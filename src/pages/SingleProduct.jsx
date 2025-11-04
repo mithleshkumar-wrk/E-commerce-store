@@ -7,6 +7,7 @@ import Breadcrums from '../components/Breadcrums';
 import Button from '../components/common/Button'
 import { IoCartOutline } from 'react-icons/io5';
 import { useCart } from '../context/CartContext';
+import RatingStar from '../utils/RatingStar';
 
 const SingleProduct = () => {
     const [singleProduct, setSingleProduct] = useState();
@@ -64,8 +65,9 @@ const SingleProduct = () => {
                                     {singleProduct.model?.toUpperCase()} /  {singleProduct.category?.toUpperCase()} / {singleProduct.brand?.toUpperCase()}
                                 </div>
 
-                                <div className='flex items-center gap-3'>
-                                    <p className='text-red-500 text-xl font-bold'>${singleProduct.price}</p>
+                                <div className='flex flex-col  gap-3'>
+                                    <RatingStar starRating={singleProduct.rating.rate}/>
+                                    <p className='text-red-500 text-2xl font-bold'>${singleProduct.price}</p>
                                     {
                                         singleProduct.discount ? (
                                             <div className='flex gap-3 items-center justify-center'>
