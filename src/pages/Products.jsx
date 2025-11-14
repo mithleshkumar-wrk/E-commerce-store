@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useGetData } from '../context/DataContext'
 import FilterSection from '../components/FilterSection';
 import Loader from '../components/common/Loader';
@@ -20,7 +20,7 @@ const Products = () => {
   const [page, setPage] = useState(1);
   const [filterOpen, setFilterOpen] = useState(false);
 
-  const HOFComponent = HOF(ProductCard);
+  const HOFComponent = useMemo(() => HOF(ProductCard), []);
 
   useEffect(() => {
     fetchAllProducts();
@@ -63,29 +63,28 @@ const Products = () => {
     setBrand(e.target.value);
   }
 
-  const filterData = data?.filter((item) => {
-    const matchesSearch = item.title.toLowerCase().includes(search.toLowerCase());
+  const filteredAndSortedData = useMemo(() => {
+    if (!data) return [];
 
-    const matchesCategory = categories.includes("All") ? true : categories.includes(item.category);
+    // 1. Filtering
+    let result = data.filter((item) => {
+      const matchesSearch = item.title.toLowerCase().includes(search.toLowerCase());
+      const matchesCategory = categories.includes("All") ? true : categories.includes(item.category);
+      const matchesBrand = brand !== "All" ? item.brand === brand : true;
+      const matchesPrice = item.price <= priceRange;
 
-    const matchesBrand = brand !== "All" ? item.brand === brand : true;
+      return matchesSearch && matchesCategory && matchesBrand && matchesPrice;
+    });
 
-    const matchesPrice = item.price <= priceRange;
+    // 2. Sorting
+    result = [...result].sort((a, b) => {
+      if (sortOption === "LowToHigh") return a.price - b.price;
+      if (sortOption === "HighToLow") return b.price - a.price;
+      return 0; // Relevance
+    });
 
-    return matchesSearch && matchesCategory && matchesBrand && matchesPrice;
-  })
-
-
-
-  filterData?.sort((a, b) => {
-    if (sortOption === "LowToHigh") {
-      return a.price - b.price;
-    } else if (sortOption === "HighToLow") {
-      return b.price - a.price;
-    } else {
-      return 0; // Relevance (no sorting, keep original order)
-    }
-  });
+    return result;
+  }, [data, search, categories, brand, priceRange, sortOption]);  // dependencies
 
   const handleResetFilterBtn = () => {
     setSearch("");
@@ -94,7 +93,7 @@ const Products = () => {
     setPriceRange(1000);
     setSortOption("Relevance");
   }
-  const dynamicPage = Math.ceil(filterData?.length / 12);
+  const dynamicPage = Math.ceil(filteredAndSortedData?.length / 12);
 
   const pageHandler = (currentPage) => {
     if (currentPage >= 1 && currentPage <= dynamicPage) {
@@ -140,9 +139,9 @@ const Products = () => {
                         handleCategoryChange={handleCategoryChange}
                         handleResetFilterBtn={handleResetFilterBtn}
                       />
-                      <button onClick={()=> {
+                      <button onClick={() => {
                         setFilterOpen(false),
-                        window.scrollTo(0,0)
+                          window.scrollTo(0, 0)
                       }} className='text-lg font-semibold flex  items-center justify-center gap-2 rounded-md px-6 py-1 mt-2  border-2 border-gray-300'> Filter <span className=''><IoIosCloseCircle /></span></button>
 
                     </div>
@@ -174,12 +173,12 @@ const Products = () => {
                 </div>
 
                 {
-                  filterData?.length > 0 ? (
+                  filteredAndSortedData?.length > 0 ? (
                     <div className='flex flex-col  md:w-[75%]'>
                       <div className='grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-8 justify-center mt-4  md:mt-10 '>
                         {
-                          filterData?.slice(page * 12 - 12, page * 12).map((product, index) => {
-                            return ( product.rating.rate > 4 ? <HOFComponent key={index} product={product}/> : <ProductCard key={index} product={product} />)
+                          filteredAndSortedData?.slice(page * 12 - 12, page * 12).map((product, index) => {
+                            return (product.rating.rate > 4 ? <HOFComponent key={index} product={product} /> : <ProductCard key={index} product={product} />)
                           })
                         }
                       </div>
