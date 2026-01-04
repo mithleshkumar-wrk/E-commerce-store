@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useCart } from '../context/CartContext'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useOrder } from '../context/OrderContext';
+import { toast } from 'react-toastify';
+import { nanoid } from 'nanoid';
 
 const Checkout = () => {
     const [totalAmount, setTotalAmount] = useState(0);
-    const { cartItem } = useCart();
+    const { cartItem, setCartItem } = useCart();
+    const { setOrders } = useOrder();
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
 
 
@@ -32,8 +38,23 @@ const Checkout = () => {
                     const { data } = await axios.post("http://localhost:4000/verify-payment", response);
 
                     if (data.success) {
+                        const now = new Date().toISOString(); // same timestamp for all cart items
+
+                        setOrders(prevOrders => [
+                            ...prevOrders,
+                            ...cartItem.map(item => ({
+                                ...item,
+                                orderId: nanoid(),   // ✅ unique ID
+                                createdAt: now
+                            }))
+                        ]);
+
+
+                        setCartItem([]);
+                        localStorage.removeItem("cartItem");
                         alert("Payment Successful ✅");
-                        localStorage.removeItem("")
+                        toast.success("Order has Placed ☺️");
+                        navigate("/orders")
                     }
                 },
                 theme: { color: "#3399cc" },
@@ -55,6 +76,8 @@ const Checkout = () => {
             setLoading(false);
         }
     }
+
+
 
     useEffect(() => {
         const tAmount = localStorage.getItem("totalAmount");

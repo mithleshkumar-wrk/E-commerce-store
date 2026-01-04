@@ -26,6 +26,10 @@ const Navbar = ({ location, getLocation, openDropdown, setOpenDropdown }) => {
             Path: "/products"
         },
         {
+            name: "Orders",
+            Path: "/orders"
+        },
+        {
             name: "About",
             Path: "/about"
         },
@@ -35,6 +39,8 @@ const Navbar = ({ location, getLocation, openDropdown, setOpenDropdown }) => {
             Path: "/contact"
         },
     ]
+
+    const hasOrders = JSON.parse(localStorage.getItem("orders") || "[]").length > 0;
 
     return (
         <div className='bg-gray-100  py-3 shadow-2xl px-4 '>
@@ -82,13 +88,18 @@ const Navbar = ({ location, getLocation, openDropdown, setOpenDropdown }) => {
                 <nav className='flex gap-7 items-center '>
                     <ul className='md:flex flex-row gap-4 hidden'>
                         {
-                            navList.map((nav) => (
+                            navList
+                            .filter(nav => nav.name !== "Orders" || hasOrders)
+                            .map((nav) => (
                                 <li key={nav.name} >
-                                    <NavLink to={nav.Path} className={({ isActive }) => `${isActive ? " border-b-2 border-red-500 transition-all" : ""}`}>
+                                    <NavLink to={nav.Path}
+                                   
+                                    className={({ isActive }) => `${isActive ? " border-b-2 border-red-500 transition-all" : ""}`}>
                                         {nav.name}
                                     </NavLink>
                                 </li>
                             ))
+                            
                         }
                     </ul>
                     <Link to={"/cart"} className='relative '>

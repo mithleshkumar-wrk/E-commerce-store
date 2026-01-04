@@ -6,6 +6,7 @@ import { ClerkProvider } from '@clerk/clerk-react'
 import { DataProvider } from './context/DataContext.jsx'
 import { CartProvider } from './context/CartContext.jsx'
 import ToastProvider from './utils/ToastProvider.jsx'
+import { OrderProvider } from './context/OrderContext.jsx'
 
 
 // Import your Publishable Key
@@ -20,9 +21,11 @@ createRoot(document.getElementById('root')).render(
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
       <DataProvider>
         <CartProvider>
-          <ToastProvider>
-            <App />
-          </ToastProvider>
+          <OrderProvider>
+            <ToastProvider>
+              <App />
+            </ToastProvider>
+          </OrderProvider>
         </CartProvider>
       </DataProvider>
     </ClerkProvider>

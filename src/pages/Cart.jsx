@@ -43,6 +43,8 @@ const Cart = ({ getLocation, location }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const isFormValid = Object.values(formData).every(value => value.trim() !== "");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
@@ -328,11 +330,17 @@ const Cart = ({ getLocation, location }) => {
 
                 <Button
                   onClick={() => {
-                    navigate("/checkout")
-                    window.scrollTo(0, 0)
+                    if (isFormValid) {
+                      navigate("/checkout");
+                      window.scrollTo(0, 0);
+                    }
                   }}
-                  text={"Proceed to checkout"}
-                  className={"mt-5 rounded-md py-2 font-semibold text-sm md:text-base"}
+                  disabled={!isFormValid}
+                  text={isFormValid ? "Proceed to Checkout" : "Please Fill Delivery details"}
+                  className={`mt-5 rounded-md py-2 font-semibold text-sm md:text-base transition-all ${!isFormValid
+                      ? "bg-gray-300 cursor-not-allowed opacity-50"
+                      : "bg-orange-500 hover:bg-orange-600 text-white shadow-md"
+                    }`}
                 />
               </div>
             </div>
