@@ -13,6 +13,7 @@ import SingleProduct from './pages/SingleProduct'
 import CategoryProducts from './pages/CategoryProducts'
 import { useCart } from './context/CartContext'
 import Protected from './components/common/Protected'
+import Checkout from './pages/Checkout'
 
 const App = () => {
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -87,6 +88,7 @@ const App = () => {
 
           <Route element={<Protected />}>
             <Route path='/cart' element={<Cart getLocation={getLocation} location={location} />} />
+            <Route path='/checkout' element={<Checkout/>}/>
           </Route>
 
           <Route path='/category/:category' element={<CategoryProducts />} />

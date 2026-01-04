@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 const Cart = ({ getLocation, location }) => {
   const { cartItem, removeFromCart, addToCart, removeProductQuantity } = useCart();
   const { user } = useUser();
+  const { setTotalAmount } = useCart();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -66,7 +67,11 @@ const Cart = ({ getLocation, location }) => {
   const handlingCharge = quantity > 0 ? quantity * 5 : 0;
 
   // calculate grand total 
-  const grandTotal = totalPrice + handlingCharge;
+  const grandTotal = (totalPrice + handlingCharge).toFixed(2);
+
+  useEffect(() => {
+    setTotalAmount(grandTotal);
+  }, [cartItem]);
 
 
   return (
@@ -322,6 +327,10 @@ const Cart = ({ getLocation, location }) => {
                 </div>
 
                 <Button
+                  onClick={() => {
+                    navigate("/checkout")
+                    window.scrollTo(0, 0)
+                  }}
                   text={"Proceed to checkout"}
                   className={"mt-5 rounded-md py-2 font-semibold text-sm md:text-base"}
                 />

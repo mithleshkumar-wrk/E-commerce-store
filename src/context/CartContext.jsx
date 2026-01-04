@@ -5,9 +5,14 @@ const CartContext = createContext(null)
 
 export const CartProvider = ({ children }) => {
     const [cartItem, setCartItem] = useState([]);
+    const [totalAmount, setTotalAmount] = useState(0)
+   
 
+    useEffect(()=>{
+        localStorage.setItem("totalAmount", JSON.stringify(totalAmount));
+    },[totalAmount])
 
-
+    // console.log("total amount in cart",totalAmount)
     // // it will run when app is load 
     // useEffect(() => {
     //     try {
@@ -62,7 +67,7 @@ export const CartProvider = ({ children }) => {
  
 
     return (
-        <CartContext.Provider value={{ cartItem, setCartItem, addToCart, removeFromCart, removeProductQuantity }}>
+        <CartContext.Provider value={{ cartItem, setCartItem, addToCart, removeFromCart, removeProductQuantity,setTotalAmount }}>
             {children}
         </CartContext.Provider>
     )
