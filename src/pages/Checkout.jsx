@@ -18,7 +18,7 @@ const Checkout = () => {
     const payNow = async () => {
         try {
             setLoading(true);
-            const { data: order } = await axios.post("http://localhost:4000/create-order", { amount: totalAmount }
+            const { data: order } = await axios.post("https://my-backend-7m1i.onrender.com/create-order", { amount: totalAmount }
             );
 
             const options = {
@@ -35,7 +35,7 @@ const Checkout = () => {
                 },
 
                 handler: async (response) => {
-                    const { data } = await axios.post("http://localhost:4000/verify-payment", response);
+                    const { data } = await axios.post("https://my-backend-7m1i.onrender.com/verify-payment", response);
 
                     if (data.success) {
                         const now = new Date().toISOString(); // same timestamp for all cart items
@@ -66,7 +66,7 @@ const Checkout = () => {
             }
 
             new window.Razorpay(options).open();
-            setLoading(false);
+           
 
         } catch (error) {
 
